@@ -1,0 +1,10 @@
+dog {
+    init;       *startup the dog automation project*
+    help;       *display all commands of dog project and their information*
+    show {
+        status; *show general status information about the dog automation project*
+        all;    *show all information *
+        water;  *show only information related to water resources*
+        food;   *show only information related to food resources*
+    }
+}

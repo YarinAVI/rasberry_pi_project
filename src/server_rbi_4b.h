@@ -4,7 +4,6 @@
  * @Last Modified by: Yarin Avisidris
  * @Last Modified time: 2020-10-15 15:16:56
  */
-
 #ifndef __SERVER_RBI_4B_H__
 #define __SERVER_RBI_4B_H__
 #include<sys/socket.h>
@@ -26,17 +25,18 @@ enum ErrorCode {
 	ERROR_NET_LISTEN_API,
 	ERROR_NET_WRITE_API,
 	ERROR_NET_ACCEPT_API,
-
+	ERROR_NET_READ_API,
 	// arguments error
 	ERROR_NULL_ARGUMENT,
 	ERROR_BAD_ARGUMENTS,
 };
 
 struct rb_pi_network {
-	int server_fd, server_write_fd,
-		sizeof_sockaddr_in;
-	struct sockaddr_in server_socket,
-					   write_socket;
+		struct sockaddr_in server_socket,
+					   	   write_socket;
+		int server_fd,
+			server_write_fd,
+			sizeof_sockaddr_in;
 };
 /*
 @param server_ptr pointer to rb_pi_network struct.
@@ -51,7 +51,7 @@ enum ErrorCode rb_pi_network_init(struct rb_pi_network *server_ptr,u_int8_t clie
 	}
 	server_ptr->server_socket.sin_family = AF_INET;// use IPv4
 	server_ptr->server_socket.sin_addr.s_addr = INADDR_ANY; // any IP address of this machine
-	server_ptr->server_socket.sin_port = htons(3211); // server port
+	server_ptr->server_socket.sin_port = htons(3333); // server port
 	server_ptr->sizeof_sockaddr_in = sizeof(struct sockaddr_in);
 	// bind socket to IP and port
 	if(bind(server_ptr->server_fd,(struct sockaddr *)&server_ptr->server_socket,sizeof(server_ptr->server_socket)) <0) {
@@ -87,6 +87,21 @@ enum ErrorCode rb_pi_network_write(struct rb_pi_network *server_ptr,const void *
 		return ERROR_NET_WRITE_API;
 	}
 	return ERROR_SUCCESS;
+}
+/*
+*@param server_ptr pointer to rb_pi_network struct.
+*@param buffer pointer to buffer.
+*@param size_in_bytes the size in bytes to read.
+*/
+enum ErrorCode rb_pi_network_read(struct rb_pi_network *server_ptr,void *buffer,size_t size_in_bytes) {
+
+if(read(server_ptr->server_write_fd,buffer,size_in_bytes) == -1) {
+	perror("Error reading from client");
+	return ERROR_NET_READ_API;
+}
+
+
+return ERROR_SUCCESS;
 }
 
 
