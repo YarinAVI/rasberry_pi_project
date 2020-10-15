@@ -1,0 +1,12 @@
+dog {
+    init;
+    status;
+    show {
+        water;
+        food;
+        all;
+    }
+}
+system {
+
+}
