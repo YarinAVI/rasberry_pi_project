@@ -42,7 +42,7 @@ struct rb_pi_network {
 @param server_ptr pointer to rb_pi_network struct.
 @param clients_amount how many clients this connection can accept.
 */
-enum ErrorCode rb_pi_network_init(struct rb_pi_network *server_ptr,u_int8_t clients_amount) {
+enum ErrorCode rb_pi_network_init(struct rb_pi_network *server_ptr,uint8_t clients_amount) {
 	// get socket descriptor from os.
 	server_ptr->server_fd = socket(AF_INET,SOCK_STREAM,0);
 	if(server_ptr->server_fd == -1) {
