@@ -2,17 +2,17 @@
  * @Author: Yarin Avisidris 
  * @Date: 2020-10-15 01:04:56 
  * @Last Modified by: Yarin Avisidris
- * @Last Modified time: 2020-10-15 15:16:56
+ * @Last Modified time: 2020-10-17 20:48:44
  */
 #ifndef __SERVER_RBI_4B_H__
 #define __SERVER_RBI_4B_H__
-#include<sys/socket.h>  //socket()
+#include <sys/socket.h>  //socket()
 #include <stdio.h> 		// perror 
 #include <errno.h> 		// errno
 #include <stdlib.h>		// malloc(), free()
-#include<arpa/inet.h>	//inet_addr
-#include<unistd.h>		//write
-#include<string.h>		//memset()
+#include <arpa/inet.h>	//inet_addr
+#include <unistd.h>		//write
+#include <string.h>		//memset()
 
 
 
@@ -94,8 +94,8 @@ enum ErrorCode rb_pi_network_init(struct rb_pi_network *server_ptr,uint8_t clien
 	}
 
 	//initialzing buffers size:
-	server_ptr->read_buffer_size              = read_buffer_size;
-	server_ptr->write_buffer_size 			  = write_buffer_size;
+	server_ptr->read_buffer_size			= read_buffer_size;
+	server_ptr->write_buffer_size			= write_buffer_size;
 
 	// allocate memory for read buffer.
 	server_ptr->read_buffer  = (void*)malloc(server_ptr->read_buffer_size);
