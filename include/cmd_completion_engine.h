@@ -4,11 +4,15 @@
 #include <unistd.h>
 
 
+typedef unsigned char byte;
+
 struct cmd_tree_node {
     struct cmd_tree_node **sub_cmds;
     char *cmd;
-    size_t cmd_size;
-    
+    char *description;
+
+    size_t sizeof_commands; // amount of commands in this node.
+    byte id;
 };
 
 
