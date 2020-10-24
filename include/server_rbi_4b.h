@@ -62,7 +62,7 @@ this will set the server to SOCK_STREAM, Provides sequenced, reliable, two-way, 
 @param write_buffer_size - the size in bytes of the write buffer.
 @param read_buffer_size  - the size in bytes of the read buffer.
 */
-enum ErrorCode rb_pi_network_init(struct rb_pi_network *server_ptr,uint8_t clients_amount,size_t write_buffer_size,size_t read_buffer_size);
+enum ErrorCode rb_pi_network_init(struct rb_pi_network *server_ptr,uint8_t clients_amount,size_t write_buffer_size,size_t read_buffer_size,in_port_t port);
 /*
 *this function is blocking see accept(), it will block untill a client connects.
 *@param server_ptr pointer to rb_pi_network struct.

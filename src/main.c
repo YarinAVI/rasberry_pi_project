@@ -21,7 +21,7 @@ struct rb_pi_network rb_net;
 
 enum ErrorCode program_error;
 
-program_error = rb_pi_network_init(&rb_net,3,10,10);
+program_error = rb_pi_network_init(&rb_net,3,10,10,3333);
 
 
 if(program_error != ERROR_SUCCESS)  goto SERVER_END;
