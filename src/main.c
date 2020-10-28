@@ -2,7 +2,7 @@
  * @Author: Yarin Avisidris 
  * @Date: 2020-10-17 20:43:01 
  * @Last Modified by: Yarin Avisidris
- * @Last Modified time: 2020-10-20 02:06:33
+ * @Last Modified time: 2020-10-29 01:12:54
  */
 /*
  * @TO DO:
@@ -21,7 +21,7 @@ struct rb_pi_network rb_net;
 
 enum ErrorCode program_error;
 
-program_error = rb_pi_network_init(&rb_net,3,10,10,3333);
+program_error = rb_pi_server_init(&rb_net,3,10,10,3333);
 
 
 if(program_error != ERROR_SUCCESS)  goto SERVER_END;
@@ -42,6 +42,4 @@ printf("server is reading :%s",rb_net.read_buffer);
 
 SERVER_END:
     return program_error;
-
-
 }

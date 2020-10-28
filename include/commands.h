@@ -1,3 +1,9 @@
+/*
+ * @Author: Yarin Avisidris 
+ * @Date: 2020-10-24 20:39:42 
+ * @Last Modified by: Yarin Avisidris
+ * @Last Modified time: 2020-10-29 01:53:30
+ */
 #ifndef __COMMAND_COMPLETION_H__
 #define __COMMAND_COMPLETION_H__
 #include <string.h>
@@ -5,8 +11,8 @@
 #include <stdlib.h> // calloc,malloc
 #include <errno.h>
 
-
 typedef unsigned char byte;
+
 struct cmd {
     char *cmd;
     char *description;
@@ -14,18 +20,16 @@ struct cmd {
     byte description_length;
 };
 struct cmd_tree_node {
-    struct cmd_tree_node **sub_cmds;
-    struct cmd;
-    byte sizeof_commands; // amount of commands in this node.
+    struct cmd **sub_cmds;
+    byte commands_size; // amount of commands in this node.
     byte id;
 }typedef cmd_tree_node;
-
 /*
-recursivly reads commands from commands file and builds a command tree.
+reads commands from commands file and builds a command tree.
 the commands are stored in memory in tree like structure.
-returns a poitner to a new cmd_tree_node structure.
 @param file file pointer.
 @param file_name name of the file to read, it will look for the file under rb_env folder.
+@return poitner to a new cmd_tree_node structure, returns NULL if it fails.
 */
 cmd_tree_node * read_commands(FILE *file,char *file_name);
 /*
