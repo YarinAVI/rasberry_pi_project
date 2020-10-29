@@ -1,3 +1,4 @@
+#include "../program_auxiliary.h"
 #ifndef __DOG_FUNCTIONS_H__
 #define __DOG_FUNCTIONS_H__
 
@@ -10,10 +11,7 @@ enum dog_error_code {
 	ERROR_NULL_ARGUMENT,
 	ERROR_BAD_ARGUMENTS,
 };
-
-
-
-enum dog_error_code dog_init(int argc,char **argv);
+enum dog_error_code dog_init(byte argc,char **argv);
 enum dog_error_code dog_show_water();
 enum dog_error_code dog_show_food();
 enum dog_error_code dog_help();

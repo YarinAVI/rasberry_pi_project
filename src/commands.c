@@ -16,19 +16,33 @@ cmd_tree_node * read_commands(FILE *file,char *file_name) {
         printf("ERROR opening file:%s\n",file_name);
         return NULL;
     }
+    char read;
+    while((read = fgetc(file)) !=EOF) {
+        switch(read) {
+            case '{':
+
+            break;
+            case ';':
+
+            break;
+
+            case ' ':
+            break;
+
+        }
+    }   
 }
-
-
 //done but needs testing
 /*
 */
 void commands_free_memory(cmd_tree_node*rm) {
-    for(int i=0;i<rm->commands_size;i++) {
-        commands_free_memory(rm->sub_cmds[i]);
+    for(int i=0;i<rm->sub_nodes_size;i++) {
+        if(rm->commands_size) free_and_null(&rm->commands),rm->commands_size=0;
+        commands_free_memory(rm->sub_nodes[i]);
     }
-    if(rm->commands_size) {
-        free_and_null(&rm->sub_cmds);
-        rm->commands_size =0;
+    if(rm->sub_nodes_size) {
+        free_and_null(&rm->sub_nodes);
+        rm->sub_nodes_size = 0;
     } 
     free_and_null(&rm);
 }

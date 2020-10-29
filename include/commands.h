@@ -6,12 +6,11 @@
  */
 #ifndef __COMMAND_COMPLETION_H__
 #define __COMMAND_COMPLETION_H__
+#include "program_auxiliary.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h> // calloc,malloc
 #include <errno.h>
-
-typedef unsigned char byte;
 
 struct cmd {
     char *cmd;
@@ -20,8 +19,10 @@ struct cmd {
     byte description_length;
 };
 struct cmd_tree_node {
-    struct cmd **sub_cmds;
+    struct cmd **commands;            // list of commands.
+    struct cmd_tree_node **sub_nodes; // list of sub_nodes.
     byte commands_size; // amount of commands in this node.
+    byte sub_nodes_size;// amount of sub nodes in this node.
     byte id;
 }typedef cmd_tree_node;
 /*

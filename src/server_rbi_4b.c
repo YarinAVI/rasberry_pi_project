@@ -4,12 +4,10 @@
  * @Last Modified by: Yarin Avisidris
  * @Last Modified time: 2020-10-24 22:11:56
  */
-
 #include "../include/server_rbi_4b.h"
 enum ErrorCode rb_pi_server_init(struct rb_pi_network *server_ptr,uint8_t clients_amount,size_t write_buffer_size,size_t read_buffer_size,in_port_t port) {
 	// get socket descriptor from os.
 	server_ptr->server_fd = socket(AF_INET,SOCK_STREAM,0);
-
 	if(server_ptr->server_fd == -1) {
 		perror("ERROR: failed to create socket, reason");
 		printf("ERROR: number:%d ",errno);
