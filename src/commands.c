@@ -30,7 +30,8 @@ cmd_tree_node * read_commands(FILE *file,char *file_name) {
             break;
 
         }
-    }   
+    }
+    fclose(file);   
 }
 //done but needs testing
 /*

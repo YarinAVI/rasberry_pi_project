@@ -16,7 +16,7 @@
 
 int main(int argc, char **argv) {
 
-struct rb_pi_network rb_net;
+struct network rb_net;
 
 
 enum ErrorCode program_error;
@@ -28,14 +28,14 @@ if(program_error != ERROR_SUCCESS)  goto SERVER_END;
 
 
 printf("Waiting for connections..\n");
-rb_pi_network_accept(&rb_net);
+network_accept(&rb_net);
 printf("Client connected successfully.\n");
 while(1) {
     //fgets(rb_net.write_buffer,rb_net.write_buffer_size,stdin);
     //fgets(write_buff,1024,stdin);
-//if(rb_pi_network_write(&rb_net,(const void *)write_buff,strlen(write_buff)) !=ERROR_SUCCESS) goto SERVER_END;
-     //if(rb_pi_network_write(&rb_net) != ERROR_SUCCESS) goto SERVER_END;
-if( rb_pi_network_read(&rb_net) != ERROR_SUCCESS) goto SERVER_END;
+//if(network_write(&rb_net,(const void *)write_buff,strlen(write_buff)) !=ERROR_SUCCESS) goto SERVER_END;
+     //if(network_write(&rb_net) != ERROR_SUCCESS) goto SERVER_END;
+if( network_read(&rb_net) != ERROR_SUCCESS) goto SERVER_END;
 printf("server is reading :%s",rb_net.read_buffer);
 //memset(&read_buff[0],0,24);
 }

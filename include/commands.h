@@ -9,7 +9,6 @@
 #include "program_auxiliary.h"
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h> // calloc,malloc
 #include <errno.h>
 
 struct cmd {
@@ -18,6 +17,11 @@ struct cmd {
     byte cmd_length;
     byte description_length;
 };
+/*
+*the first node is the root node, the root node will include all the program sub commands under
+*cmd_tree_node ** sub_nodes structure pointer list,the root node dosn't have any commands and its pointer
+* **commands should point to NULL, and commands_size set to 0,
+*/
 struct cmd_tree_node {
     struct cmd **commands;            // list of commands.
     struct cmd_tree_node **sub_nodes; // list of sub_nodes.
