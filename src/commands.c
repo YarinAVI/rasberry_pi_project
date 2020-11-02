@@ -33,9 +33,7 @@ cmd_tree_node * read_commands(FILE *file,char *file_name) {
     }
     fclose(file);   
 }
-//done but needs testing
-/*
-*/
+// need to rewrite this.
 void commands_free_memory(cmd_tree_node*rm) {
     for(int i=0;i<rm->sub_nodes_size;i++) {
         if(rm->commands_size) free_and_null(&rm->commands),rm->commands_size=0;
