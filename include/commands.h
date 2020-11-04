@@ -28,7 +28,7 @@ struct cmd_tree_node {
     byte commands_size; // amount of commands in this node.
     byte sub_nodes_size;// amount of sub nodes in this node.
     byte id;
-}typedef cmd_tree_node;
+};
 /*
 reads commands from commands file and builds a command tree.
 the commands are stored in memory in tree like structure.
@@ -36,12 +36,12 @@ the commands are stored in memory in tree like structure.
 @param file_name name of the file to read, it will look for the file under rb_env folder.
 @return poitner to a new cmd_tree_node structure, returns NULL if it fails.
 */
-cmd_tree_node * read_commands(FILE *file,char *file_name);
+struct cmd_tree_node * read_commands(FILE *file,char *file_name);
 /*
 recursivly frees the memory pointed by *rm.
 @param rm pointer to cmd_tree_node structure.
 */
-void commands_free_memory(cmd_tree_node*rm);
+void commands_free_memory(struct cmd_tree_node*rm);
 
 
 

@@ -2,11 +2,12 @@
 #define __SERVER_H__
 #include "../include/program_auxiliary.h"
 #include "../include/network.h"
+#include "../include/commands.h"
 
 
 struct server {
     struct network net;
-    struct cmd_tree_node *root_commands;
+    struct cmd_tree_node root_commands;
 };
 /*
 *this will set the server network to SOCK_STREAM, Provides sequenced, reliable, two-way, connection-

@@ -13,7 +13,6 @@
 #include <unistd.h>		//write
 #include <string.h>		//memset()
 #include <program_auxiliary.h>
-
 struct network {
 	    //  buffer's sizes
 		size_t read_buffer_size;

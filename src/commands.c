@@ -7,9 +7,9 @@
 #include "../include/commands.h"
 #include "../include/program_auxiliary.h"
 // still WIP
-cmd_tree_node * read_commands(FILE *file,char *file_name) {
+struct cmd_tree_node * read_commands(FILE *file,char *file_name) {
     if(!file_name) return NULL;
-    cmd_tree_node *out = (cmd_tree_node*)calloc(1,sizeof(cmd_tree_node));
+    struct cmd_tree_node *out = (struct cmd_tree_node*)calloc(1,sizeof(struct cmd_tree_node));
     if(file = fopen(file_name,"r") == NULL) {
         perror("ERROR: Opening file, reason:");
         printf("ERROR: number:%d\n",errno);
@@ -33,17 +33,22 @@ cmd_tree_node * read_commands(FILE *file,char *file_name) {
     }
     fclose(file);   
 }
-//done but needs testing
 /*
+needs testing.
 */
-void commands_free_memory(cmd_tree_node*rm) {
+void commands_free_memory(struct cmd_tree_node*rm) {
+    for(int i=0;i<rm->commands_size;i++) {
+        free(rm->commands[i]);
+    }
+    if(rm->commands_size) {
+    rm->commands_size = 0;
+    free_and_null_2(&rm->commands);
+    }
     for(int i=0;i<rm->sub_nodes_size;i++) {
-        if(rm->commands_size) free_and_null(&rm->commands),rm->commands_size=0;
         commands_free_memory(rm->sub_nodes[i]);
     }
     if(rm->sub_nodes_size) {
-        free_and_null(&rm->sub_nodes);
         rm->sub_nodes_size = 0;
-    } 
-    free_and_null(&rm);
+        free_and_null_2(&rm->sub_nodes);
+    }
 }
