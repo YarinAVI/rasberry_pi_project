@@ -35,7 +35,7 @@ while(1) {
     //fgets(write_buff,1024,stdin);
 //if(network_write(&rb_net,(const void *)write_buff,strlen(write_buff)) !=ERROR_SUCCESS) goto SERVER_END;
      //if(network_write(&rb_net) != ERROR_SUCCESS) goto SERVER_END;
-if( network_read(&rb_net) != ERROR_SUCCESS) goto SERVER_END;
+if(network_read(&rb_net) != ERROR_SUCCESS) goto SERVER_END;
 printf("server is reading :%s",rb_net.read_buffer);
 //memset(&read_buff[0],0,24);
 }

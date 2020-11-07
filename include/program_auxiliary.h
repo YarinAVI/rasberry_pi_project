@@ -2,7 +2,7 @@
  * @Author: Yarin Avisidris 
  * @Date: 2020-10-29 00:29:43 
  * @Last Modified by: Yarin Avisidris
- * @Last Modified time: 2020-10-29 01:22:42
+ * @Last Modified time: 2020-11-07 18:04:36
  */
 #include <stdlib.h>		// malloc(), free()
 #include <stdbool.h>
@@ -35,13 +35,4 @@ enum ErrorCode {
 	// commands errors:
 	ERROR_BAD_SYNTAX,
 };
-
-void free_and_null(void **ptr) {
-    free((*ptr));
-    (*ptr) = NULL;
-}
-void free_and_null_2(void ***ptr) {
-	free((*ptr));
-	(*ptr) = NULL;
-}
 #endif

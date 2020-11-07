@@ -2,7 +2,7 @@
  * @Author: Yarin Avisidris 
  * @Date: 2020-10-24 20:39:21 
  * @Last Modified by: Yarin Avisidris
- * @Last Modified time: 2020-10-24 22:11:56
+ * @Last Modified time: 2020-11-07 18:13:52
  */
 #include "../include/network.h"
 enum ErrorCode network_init(struct network *net,uint8_t clients_amount,size_t write_buffer_size,size_t read_buffer_size,in_port_t port) {
@@ -57,46 +57,46 @@ enum ErrorCode network_init(struct network *net,uint8_t clients_amount,size_t wr
 
 	return ERROR_SUCCESS;
 }
-enum ErrorCode network_accept(struct network *server) {
+enum ErrorCode network_accept(struct network *net) {
 	// receive start accepting client connection (this is blocking).
-	server->server_data_fd = accept(server->server_fd,(struct sockaddr*)&server->write_socket,(socklen_t*)&server->sizeof_sockaddr_in);
-	if(server->server_data_fd == -1) {
+	net->server_data_fd = accept(net->server_fd,(struct sockaddr*)&net->write_socket,(socklen_t*)&net->sizeof_sockaddr_in);
+	if(net->server_data_fd == -1) {
 		perror("ERROR: accepting connection, reason");
 		printf("ERROR: number:%d\n",errno);
 		return ERROR_NET_ACCEPT_API;
 	}
 	return ERROR_SUCCESS;
 }
-enum ErrorCode network_write(struct network *server) {
+enum ErrorCode network_write(struct network *net) {
 
-	if(write(server->server_data_fd,server->write_buffer,server->write_buffer_size) == -1) {
+	if(write(net->server_data_fd,net->write_buffer,net->write_buffer_size) == -1) {
 		perror("ERROR: writing to client, reason");
 		printf("ERROR: number:%d\n",errno);
 		return ERROR_NET_WRITE_API;
 	}
 	return ERROR_SUCCESS;
 }
-enum ErrorCode network_read(struct network *server) {
-	memset(server->read_buffer,0,server->read_buffer_size);
-if(read(server->server_data_fd,server->read_buffer,server->read_buffer_size) == -1) {
+enum ErrorCode network_read(struct network *net) {
+	memset(net->read_buffer,0,net->read_buffer_size);
+if(read(net->server_data_fd,net->read_buffer,net->read_buffer_size) == -1) {
 	perror("ERROR: reading from client, reason");
 	printf("ERROR: number:%d\n",errno);
 	return ERROR_NET_READ_API;
 }
 return ERROR_SUCCESS;
 }
-void network_free_heap(struct network *server) {
-	free(server->write_buffer);
-	free(server->read_buffer);
-	server->write_buffer	= NULL;
-	server->read_buffer		= NULL;
+void network_free_heap(struct network *net) {
+	free(net->write_buffer);
+	free(net->read_buffer);
+	net->write_buffer		= NULL;
+	net->read_buffer		= NULL;
 }
-enum ErrorCode network_cleanup(struct network * server) {	
-	if(close(server->server_fd) == -1 || close(server->server_data_fd) ==-1) {
+enum ErrorCode network_cleanup(struct network * net) {	
+	if(close(net->server_fd) == -1 || close(net->server_data_fd) ==-1) {
 		perror("ERROR: failed to close file discriptors:");
 		printf("ERROR: number:%d\n",errno);
 		return ERROR_NET_CLOSE_API;
 	}
-	rb_pi_free_heap(server);
-	free(server);
+	network_free_heap(net);
+	free(net);
 }
