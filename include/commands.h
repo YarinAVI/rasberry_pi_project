@@ -10,17 +10,16 @@
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
-
 struct cmd {
-    char *cmd;
-    char *description;
-    byte cmd_length;
-    byte description_length;
+    char *cmd;// the command string
+    char *description;// the description string
+    byte cmd_length;// the size
+    byte description_length; // the size
 };
 /*
 *the first node is the root node, the root node will include all the program sub commands under
 *cmd_tree_node ** sub_nodes structure pointer list,the root node dosn't have any commands and its pointer
-* **commands should point to NULL, and commands_size set to 0,
+* **commands should point to NULL, and commands_size set to 0.
 */
 struct cmd_tree_node {
     struct cmd **commands;            // list of commands.
@@ -36,26 +35,15 @@ the commands are stored in memory in tree like structure.
 @param file_name name of the file to read, it will look for the file under rb_env folder.
 @return poitner to a new cmd_tree_node structure, returns NULL if it fails.
 */
-struct cmd_tree_node * read_commands(FILE *file,char *file_name);
+struct cmd_tree_node * commands_init(FILE *file,char *file_name);
+/*
+*this function will check if the given file is syntactically OK by rbc syntax.
+*returns ERROR_BAD_SYNTAX if the syntax was not good.
+*/
+enum ErrorCode commands_check_syntax(FILE *cmd_file);
 /*
 recursivly frees the memory pointed by *rm.
 @param rm pointer to cmd_tree_node structure.
 */
-void commands_free_memory(struct cmd_tree_node*rm);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void commands_cleanup(struct cmd_tree_node*rm);
 #endif
