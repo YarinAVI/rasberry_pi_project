@@ -76,9 +76,20 @@ enum ErrorCode network_write(struct network *net) {
 	}
 	return ERROR_SUCCESS;
 }
+enum ErrorCode network_write_msg(struct network *net,char *msg,size_t msg_size) {
+	if(net->write_buffer_size < msg_size) return ERROR_BUFFER_TOO_SMALL;
+	memcpy(net->write_buffer,msg,msg_size);
+	memset(net->write_buffer+msg_size,0,net->write_buffer_size-msg_size);
+	if(write(net->server_data_fd,net->write_buffer,net->write_buffer_size) == -1) {
+		perror("ERROR: writing to client, reason");
+		printf("ERROR: number:%d\n",errno);
+		return ERROR_NET_WRITE_API;
+	}
+	return ERROR_SUCCESS;
+}
 enum ErrorCode network_read(struct network *net) {
 	memset(net->read_buffer,0,net->read_buffer_size);
-if(read(net->server_data_fd,net->read_buffer,net->read_buffer_size) == -1) {
+	if(read(net->server_data_fd,net->read_buffer,net->read_buffer_size) == -1) {
 	perror("ERROR: reading from client, reason");
 	printf("ERROR: number:%d\n",errno);
 	return ERROR_NET_READ_API;

@@ -8,22 +8,21 @@
 #include "../include/program_auxiliary.h"
 #include <stack> // c++ stack.
 // still WIP
-struct cmd_tree_node * commands_init(FILE *cmd_file,char *file_name) {
-    if(!file_name) return NULL;
-    struct cmd_tree_node *out = NULL;
+enum ErrorCode commands_init(cmd_tree_node *root,FILE *cmd_file,char *file_name) {
+    if(!file_name) return ERROR_FILE_BAD_NAME;
     if((cmd_file = fopen(file_name,"r")) == NULL) {
         perror("ERROR: Opening file, reason:");
         printf("ERROR: number:%d\n",errno);
         printf("ERROR opening file:%s\n",file_name);
-        return NULL;
+        return ERROR_OPEN_FILE;
     }
     /*
     *before starting we must check if the file's syntax is correct, if so then we continue to read the file
     *and parse the information if not we return NULL pointer.
     */
-    if(commands_check_syntax(cmd_file)==ERROR_BAD_SYNTAX) return NULL;
+    if(commands_check_syntax(cmd_file)==ERROR_BAD_SYNTAX) return ERROR_BAD_SYNTAX;
     char read = fgetc(cmd_file);
-    struct cmd_tree_node ** iterator = &out;
+    struct cmd_tree_node ** iterator = &root;
     struct string cmd_str;
     struct string description_str;
     std::stack<cmd_tree_node*> cmd_stack;
@@ -50,8 +49,10 @@ struct cmd_tree_node * commands_init(FILE *cmd_file,char *file_name) {
 
             case '}':
             // set iterator to point to current stack, then pop stack.
+            if(!cmd_stack.empty()) {
             iterator = &cmd_stack.top();
             cmd_stack.pop();
+            }
             break;
             
             case ';':
@@ -73,7 +74,7 @@ struct cmd_tree_node * commands_init(FILE *cmd_file,char *file_name) {
             }
             flag=!flag;
             break;
-            case '\n':
+            case '\n': case '\r': case '\t':
 
             break;
             default:
@@ -96,13 +97,13 @@ struct cmd_tree_node * commands_init(FILE *cmd_file,char *file_name) {
 
         }
     }
-    fclose(cmd_file);   
+    fclose(cmd_file);
+    return ERROR_SUCCESS;
 }
 enum ErrorCode commands_check_syntax(FILE *cmd_file) {
 
 
-
-
+    rewind(cmd_file);
     return ERROR_SUCCESS;
 }
 /*

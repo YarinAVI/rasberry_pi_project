@@ -29,10 +29,13 @@ enum ErrorCode {
 	ERROR_MEM_MALLOC_NULL,
     // logic memory errors:
     ERROR_MEM_MIGHT_BE_INITIALIZED,
+	ERROR_BUFFER_TOO_SMALL,
 	// arguments error:
 	ERROR_NULL_ARGUMENT,
 	ERROR_BAD_ARGUMENTS,
 	// commands errors:
 	ERROR_BAD_SYNTAX,
+	ERROR_OPEN_FILE,
+	ERROR_FILE_BAD_NAME,
 };
 #endif

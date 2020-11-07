@@ -47,10 +47,21 @@ enum ErrorCode network_init(struct network *net,uint8_t clients_amount,size_t wr
 enum ErrorCode network_accept(struct network *net);
 /*
 *this function will call write() on server->write_buffer with server->wirte_buffer_size.
+*this function will write whats ever inside the server->write_buffer into the socket.
 *@param net pointer to network struct.
 *@return enum ErrorCode, returns ERROR_SUCCESS if write() succeeded.
 */
 enum ErrorCode network_write(struct network *net);
+/*
+*this function will call write() on server->write_buffer with server->wirte_buffer_size.
+*this function will copy the msg into net->write_buffer if the msg fits the size of the buffer.
+*and then will write this into the socket.
+*@param net pointer to network structure.
+*@param msg pointer to message string.
+*@param msg_size the size of the message string in bytes.
+*@return returns ERROR_SUCCESS if no error, otherwise returns the appropiate error.
+*/
+enum ErrorCode network_write_msg(struct network *net,char *msg,size_t msg_size)
 /*
 *this function will use server->read_buffer to read from socket and write into read buffer.
 *@param net pointer to network struct.

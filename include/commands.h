@@ -35,9 +35,10 @@ the commands are stored in memory in tree like structure.
 @param file_name name of the file to read, it will look for the file under rb_env folder.
 @return poitner to a new cmd_tree_node structure, returns NULL if it fails.
 */
-struct cmd_tree_node * commands_init(FILE *file,char *file_name);
+enum ErrorCode commands_init(FILE *file,char *file_name);
 /*
 *this function will check if the given file is syntactically OK by rbc syntax.
+*this function should only be called after fopen was called on this structure.
 *returns ERROR_BAD_SYNTAX if the syntax was not good.
 */
 enum ErrorCode commands_check_syntax(FILE *cmd_file);
