@@ -4,16 +4,17 @@
  * @Last Modified by: Yarin Avisidris
  * @Last Modified time: 2020-11-07 18:04:36
  */
-#include <stdlib.h>		// malloc(), free()
-#include <stdbool.h>
 #ifndef __PROGRAM_AUX__H__
 #define __PROGRAM_AUX__H__
-typedef unsigned char byte;
+#include <stdlib.h>		// malloc(), free()
+#include <stdbool.h>
+#include <stdint.h>
+#define free_and_null(p) free((p));(p) = NULL;
 //this is struct for string, no need null byte for terminating, instead we save the size of it.
-struct string {
+typedef struct string {
 	char *s;
-	byte size;
-};
+	u_int64_t size;
+}string;
 enum ErrorCode {
 	//no error:
 	ERROR_SUCCESS = 0,

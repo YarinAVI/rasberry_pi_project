@@ -5,7 +5,7 @@
  * @Last Modified time: 2020-11-07 18:13:52
  */
 #include "../include/network.h"
-enum ErrorCode network_init(struct network *net,uint8_t clients_amount,size_t write_buffer_size,size_t read_buffer_size,in_port_t port) {
+enum ErrorCode network_init(network *net,uint8_t clients_amount,size_t write_buffer_size,size_t read_buffer_size,in_port_t port) {
 	//check if this structure's buffers are not NULL, if so then this structure could be already initialized
 	// to overcome possible error we will return ERROR_MEM_MIGHT_BE_INITIALIZED in this case.
 	if(net->read_buffer || net->read_buffer) {
@@ -57,7 +57,7 @@ enum ErrorCode network_init(struct network *net,uint8_t clients_amount,size_t wr
 
 	return ERROR_SUCCESS;
 }
-enum ErrorCode network_accept(struct network *net) {
+enum ErrorCode network_accept(network *net) {
 	// receive start accepting client connection (this is blocking).
 	net->server_data_fd = accept(net->server_fd,(struct sockaddr*)&net->write_socket,(socklen_t*)&net->sizeof_sockaddr_in);
 	if(net->server_data_fd == -1) {
@@ -67,7 +67,7 @@ enum ErrorCode network_accept(struct network *net) {
 	}
 	return ERROR_SUCCESS;
 }
-enum ErrorCode network_write(struct network *net) {
+enum ErrorCode network_write(network *net) {
 
 	if(write(net->server_data_fd,net->write_buffer,net->write_buffer_size) == -1) {
 		perror("ERROR: writing to client, reason");
@@ -76,7 +76,7 @@ enum ErrorCode network_write(struct network *net) {
 	}
 	return ERROR_SUCCESS;
 }
-enum ErrorCode network_write_msg(struct network *net,char *msg,size_t msg_size) {
+enum ErrorCode network_write_msg(network *net,char *msg,size_t msg_size) {
 	if(net->write_buffer_size < msg_size) return ERROR_BUFFER_TOO_SMALL;
 	memcpy(net->write_buffer,msg,msg_size);
 	memset(net->write_buffer+msg_size,0,net->write_buffer_size-msg_size);
@@ -87,7 +87,7 @@ enum ErrorCode network_write_msg(struct network *net,char *msg,size_t msg_size) 
 	}
 	return ERROR_SUCCESS;
 }
-enum ErrorCode network_read(struct network *net) {
+enum ErrorCode network_read(network *net) {
 	memset(net->read_buffer,0,net->read_buffer_size);
 	if(read(net->server_data_fd,net->read_buffer,net->read_buffer_size) == -1) {
 	perror("ERROR: reading from client, reason");
@@ -96,13 +96,11 @@ enum ErrorCode network_read(struct network *net) {
 }
 return ERROR_SUCCESS;
 }
-void network_free_heap(struct network *net) {
-	free(net->write_buffer);
-	free(net->read_buffer);
-	net->write_buffer		= NULL;
-	net->read_buffer		= NULL;
+void network_free_heap(network *net) {
+	free_and_null(net->read_buffer);
+	free_and_null(net->read_buffer);
 }
-enum ErrorCode network_cleanup(struct network * net) {	
+enum ErrorCode network_cleanup(network * net) {	
 	if(close(net->server_fd) == -1 || close(net->server_data_fd) ==-1) {
 		perror("ERROR: failed to close file discriptors:");
 		printf("ERROR: number:%d\n",errno);

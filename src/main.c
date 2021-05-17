@@ -16,9 +16,7 @@
 
 int main(int argc, char **argv) {
 
-struct network rb_net;
-
-
+network rb_net;
 enum ErrorCode program_error;
 
 program_error = rb_pi_server_init(&rb_net,3,10,10,3333);

@@ -11,10 +11,8 @@
 #include <stdio.h>
 #include <errno.h>
 struct cmd {
-    char *cmd;// the command string
-    char *description;// the description string
-    byte cmd_length;// the size
-    byte description_length; // the size
+    string cmd_str;
+    string description_str;
 };
 /*
 *the first node is the root node, the root node will include all the program sub commands under
@@ -24,8 +22,8 @@ struct cmd {
 struct cmd_tree_node {
     struct cmd **commands;            // list of commands.
     struct cmd_tree_node **sub_nodes; // list of sub_nodes.
-    byte commands_size; // amount of commands in this node.
-    byte sub_nodes_size;// amount of sub nodes in this node.
+    uint8_t commands_size; // amount of commands in this node.
+    uint8_t sub_nodes_size;// amount of sub nodes in this node.
     byte id;
 };
 /*

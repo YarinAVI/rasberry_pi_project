@@ -16,10 +16,6 @@ enum ErrorCode commands_init(cmd_tree_node *root,FILE *cmd_file,char *file_name)
         printf("ERROR opening file:%s\n",file_name);
         return ERROR_OPEN_FILE;
     }
-    /*
-    *before starting we must check if the file's syntax is correct, if so then we continue to read the file
-    *and parse the information if not we return NULL pointer.
-    */
     if(commands_check_syntax(cmd_file)==ERROR_BAD_SYNTAX) return ERROR_BAD_SYNTAX;
     char read = fgetc(cmd_file);
     struct cmd_tree_node ** iterator = &root;
@@ -54,7 +50,6 @@ enum ErrorCode commands_init(cmd_tree_node *root,FILE *cmd_file,char *file_name)
             cmd_stack.pop();
             }
             break;
-            
             case ';':
             (*iterator)->commands[(*iterator)->commands_size-1]->cmd_length = cmd_str.size;
             (*iterator)->commands[(*iterator)->commands_size-1]->cmd = (char*)malloc(cmd_str.size);
@@ -100,7 +95,7 @@ enum ErrorCode commands_init(cmd_tree_node *root,FILE *cmd_file,char *file_name)
     fclose(cmd_file);
     return ERROR_SUCCESS;
 }
-enum ErrorCode commands_check_syntax(FILE *cmd_file) {
+static enum ErrorCode commands_check_syntax(FILE *cmd_file) {
 
 
     rewind(cmd_file);

@@ -6,7 +6,7 @@
 
 
 struct server {
-    struct network net;
+    network net;
     struct cmd_tree_node root_commands;
 };
 /*
