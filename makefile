@@ -5,7 +5,7 @@ SRC_DIR 	= src
 OUT_DIR 	= out
 OBJ_DIR 	= $(OUT_DIR)/obj
 BIN_DIR 	= $(OUT_DIR)/bin
-PROGRAM 	= myText.out
+PROGRAM 	= a.out
 TARGET		= $(BIN_DIR)/$(PROGRAM)
 
 HEADERS 	= $(wildcard $(SRC_DIR)/*.h)
