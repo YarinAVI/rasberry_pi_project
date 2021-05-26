@@ -24,7 +24,6 @@ struct cmd_tree_node {
     struct cmd_tree_node **sub_nodes; // list of sub_nodes.
     uint8_t commands_size; // amount of commands in this node.
     uint8_t sub_nodes_size;// amount of sub nodes in this node.
-    byte id;
 };
 /*
 reads commands from commands file and builds a command tree.
